@@ -2,7 +2,7 @@
 Authors: Sydney Stokes, Joshua Wallington, Courtney Young
 
 **Tasks** 
-- [ ] Design the ER diagram
+- [X] Design the ER diagram
 - [ ] Write the commands for creating tables and inserting values
 - [ ] Show the tables with the contents that you have inserted
 - [ ] Compute the average/highest/lowest score of an assignment
