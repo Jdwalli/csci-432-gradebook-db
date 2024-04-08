@@ -47,8 +47,8 @@ if __name__ == "__main__":
 
         enrolled_classes = res.fetchall()
 
-        print(f"{first_name} {last_name} is enrolled in the following classes:")
+        print(f"\n{first_name} {last_name} is enrolled in the following classes:")
         for enrolled_class in enrolled_classes:
-            print(enrolled_class[0], end="\n\n")
+            print(enrolled_class[0], end="\n")
 
 
