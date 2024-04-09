@@ -109,7 +109,7 @@ INSERT INTO `ASSIGNMENTS` VALUES(76382, 14216, 1, 1, 100);
 INSERT INTO `ASSIGNMENTS` VALUES(76383, 14216, 1, 1, 100);
 INSERT INTO `ASSIGNMENTS` VALUES(76384, 14216, 1, 1, 100);
 
--- -- Commands for inserting values into STUDENTGRADES
+-- Commands for inserting values into STUDENTGRADES
 INSERT INTO `STUDENTGRADES` VALUES(13845, 11836, 98);
 INSERT INTO `STUDENTGRADES` VALUES(13845, 11837, 89);
 INSERT INTO `STUDENTGRADES` VALUES(13845, 99823, 91);
@@ -145,3 +145,38 @@ INSERT INTO `ALLOCATIONS` VALUES(10, 14216, 'Homework', 30);
 INSERT INTO `ALLOCATIONS` VALUES(11, 14216, 'Tests', 45);
 INSERT INTO `ALLOCATIONS` VALUES(12, 14216, 'Projects', 15);
 
+-- Compute the average/highest/lowest score of an assignment
+
+-- AVERAGE
+    SELECT assignment_id, AVG(points) AS avg_score FROM STUDENTGRADES GROUP BY assignment_id;
+
+-- HIGHEST
+    SELECT assignment_id, MAX(points) AS highest_score FROM STUDENTGRADES GROUP BY assignment_id;
+
+-- LOWEST
+    SELECT assignment_id, MIN(points) AS lowest_score FROM STUDENTGRADES GROUP BY assignment_id;
+
+-- List all of the students in a given course
+SELECT S.first_name, S.last_name 
+FROM STUDENTS S 
+JOIN REGISTRATIONS R 
+ON S.student_id = R.student_id 
+JOIN COURSES C 
+ON R.course_id = C.course_id 
+WHERE C.course_name = 'Database Systems';
+
+-- List all of the students in a course and all of their scores on every assignment
+SELECT S.first_name, S.last_name, AG.assignment_id, SG.points
+FROM STUDENTS S
+JOIN REGISTRATIONS R ON S.student_id = R.student_id
+JOIN COURSES C ON R.course_id = C.course_id
+JOIN ASSIGNMENTS AG ON C.course_id = AG.course_id
+LEFT JOIN STUDENTGRADES SG ON S.student_id = SG.student_id AND AG.assignment_id = SG.assignment_id
+WHERE C.course_name = 'Database Systems';
+
+-- Add an assignment to a course
+-- Change the percentages of the categories for a course
+-- Add 2 points to the score of each student on an assignment
+-- Add 2 points just to those students whose last name contains a 'Q'.
+-- Compute the grade for a student
+-- Compute the grade for a student, where the lowest score for a given category is dropped.

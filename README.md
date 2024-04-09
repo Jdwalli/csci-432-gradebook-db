@@ -3,11 +3,11 @@ Authors: Sydney Stokes, Joshua Wallington, Courtney Young
 
 **Tasks** 
 - [X] Design the ER diagram
-- [ ] Write the commands for creating tables and inserting values
+- [X] Write the commands for creating tables and inserting values
 - [ ] Show the tables with the contents that you have inserted
-- [ ] Compute the average/highest/lowest score of an assignment
-- [ ] List all of the students in a given course
-- [ ] List all of the students in a course and all of their scores on every assignment
+- [X] Compute the average/highest/lowest score of an assignment
+- [X] List all of the students in a given course
+- [X] List all of the students in a course and all of their scores on every assignment
 - [ ] Add an assignment to a course
 - [ ] Change the percentages of the categories for a course
 - [ ] Add 2 points to the score of each student on an assignment
