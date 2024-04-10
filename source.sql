@@ -128,7 +128,7 @@ INSERT INTO `ALLOCATIONS` VALUES(2, 14150, 'Homework', 20); --Database Systems C
 INSERT INTO `ALLOCATIONS` VALUES(3, 14150, 'Midterm', 30); --Database Systems Class
 INSERT INTO `ALLOCATIONS` VALUES(4, 14150, 'Final Exam', 40); --Database Systems Class
 
-INSERT INTO `ALLOCATIONS` VALUES(5, 17550, 'Attendance', 5); -- Linear Algebra Class
+INSERT INTO `ALLOCATIONS` VALUES(5, 17550, 'Attendance', 4); -- Linear Algebra Class
 INSERT INTO `ALLOCATIONS` VALUES(6, 17550, 'Quizzes', 25); -- Linear Algebra Class
 INSERT INTO `ALLOCATIONS` VALUES(7, 17550, 'Exam', 30); -- Linear Algebra Class
 INSERT INTO `ALLOCATIONS` VALUES(8, 17550, 'Final Exam', 40); -- Linear Algebra Class
@@ -253,8 +253,31 @@ LEFT JOIN STUDENTGRADES SG ON S.student_id = SG.student_id AND AG.assignment_id 
 WHERE C.course_name = 'Database Systems';
 
 -- Add an assignment to a course
+    -- Add an extra homework 
+
+    INSERT INTO ASSIGNMENTS (course_id, allocation_id, instance, points_possible)
+        VALUES (course_id_value, allocation_id_value, instance_value, points_possible_value);
+
 -- Change the percentages of the categories for a course
+    -- Set Linear Algebra Class Attendance percentage to 5 instead of 4
+
+    UPDATE ALLOCATIONS
+    SET percentage = 5
+    WHERE course_id = 17550 AND category_name = 'Attendance'; 
+
 -- Add 2 points to the score of each student on an assignment
+    -- Add 2 points to linear algebra final exam
+
+    UPDATE STUDENTGRADES
+    SET points = points + 2
+    WHERE assignment_id = 17550;
+
 -- Add 2 points just to those students whose last name contains a 'Q'.
+
+    UPDATE STUDENTGRADES
+    SET points = points + 2
+    WHERE assignment_id = 17550
+    AND student_id IN (SELECT student_id FROM STUDENTS WHERE last_name LIKE '%Q%');
+
 -- Compute the grade for a student
 -- Compute the grade for a student, where the lowest score for a given category is dropped.
