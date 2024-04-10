@@ -73,7 +73,7 @@ INSERT INTO `STUDENTS` VALUES('Sydney', 'Stokes', 'Computer Science', 23456);
 -- Commands for inserting values into COURSES (course_id, department, course_number, course_name, semester, year)
 
 INSERT INTO `COURSES` VALUES (14150, 'Computer Science', 'CSCI 301', 'Database Systems', 'Fall', 2024);
-INSERT INTO `COURSES` VALUES (17550, 'Mathematics', 'MATH 210', 'Linear Algebra', 'SPring', 2024);
+INSERT INTO `COURSES` VALUES (17550, 'Mathematics', 'MATH 210', 'Linear Algebra', 'Spring', 2024);
 INSERT INTO `COURSES` VALUES (14216, 'Computer Science', 'CSCI 302', 'Structure of Programming Languages', 'Spring', 2024);
 
 -- Commands for inserting values into REGISTRATIONS (student_id, course_id)
@@ -256,7 +256,7 @@ WHERE C.course_name = 'Database Systems';
     -- Add an extra homework 
 
     INSERT INTO ASSIGNMENTS (course_id, allocation_id, instance, points_possible)
-        VALUES (course_id_value, allocation_id_value, instance_value, points_possible_value);
+        VALUES (17550, 100, 1, 10);
 
 -- Change the percentages of the categories for a course
     -- Set Linear Algebra Class Attendance percentage to 5 instead of 4
