@@ -64,86 +64,164 @@ CREATE TABLE "ALLOCATIONS" (
     FOREIGN KEY ("course_id") REFERENCES "COURSES"("course_id")
 );
 
--- Commands for inserting values into STUDENTS
+-- Commands for inserting values into STUDENTS (first, last, major, student_id)
+
 INSERT INTO `STUDENTS` VALUES('Joshua', 'Wallington', 'Computer Science', 13845);
 INSERT INTO `STUDENTS` VALUES('Courtney', 'Young', 'Computer Science', 67890);
 INSERT INTO `STUDENTS` VALUES('Sydney', 'Stokes', 'Computer Science', 23456);
 
--- Commands for inserting values into COURSES
-INSERT INTO `COURSES` VALUES(76294, "Academic Success", 'HUBIS 001-01', 'Ways of the Bison', "Fall", 2025);
-INSERT INTO `COURSES` VALUES(14374, "English", 'ENGL 005-01', 'Technical Writing', "Spring", 2024);
-INSERT INTO `COURSES` VALUES(12312, "Aviation", 'AVA 001-01', 'Flight Mechanics', "Fall", 2024);
-INSERT INTO `COURSES` VALUES(12012, "Aviation", 'AVA 300-02', 'Flight Training', "Spring", 2025);
+-- Commands for inserting values into COURSES (course_id, department, course_number, course_name, semester, year)
+
 INSERT INTO `COURSES` VALUES (14150, 'Computer Science', 'CSCI 301', 'Database Systems', 'Fall', 2024);
-INSERT INTO `COURSES` VALUES (17550, 'Mathematics', 'MATH 210', 'Linear Algebra', 'Fall', 2023);
+INSERT INTO `COURSES` VALUES (17550, 'Mathematics', 'MATH 210', 'Linear Algebra', 'SPring', 2024);
 INSERT INTO `COURSES` VALUES (14216, 'Computer Science', 'CSCI 302', 'Structure of Programming Languages', 'Spring', 2024);
-INSERT INTO `COURSES` VALUES (12017, 'Chemistry', 'CHEM 301', 'Organic Chemistry', 'Spring', 2024);
-INSERT INTO `COURSES` VALUES (98293, 'Music', 'MUS 101', 'Music in Our Lives', 'Fall', 2022);
-INSERT INTO `COURSES` VALUES (17170, 'General Studies', 'GS 101', 'Freshman Seminar', 'Fall', 2022);
-INSERT INTO `COURSES` VALUES (14567, 'Philosophy', 'PHIL 201', 'Ethics', 'Spring', 2024);
+
+-- Commands for inserting values into REGISTRATIONS (student_id, course_id)
+
+INSERT INTO `REGISTRATIONS` VALUES(13845, 14150); -- Register Joshua Wallington (13845) for CSCI 301 (14150)
+INSERT INTO `REGISTRATIONS` VALUES(13845, 17550); -- Register Joshua Wallington (13845) for MATH 201 (17550)
+INSERT INTO `REGISTRATIONS` VALUES(13845, 14216); -- Register Joshua Wallington (13845) for CSCI 302 (14216)
+
+INSERT INTO `REGISTRATIONS` VALUES(67890, 14150); -- Register Courtney Young (67890) for CSCI 301 (14150)
+INSERT INTO `REGISTRATIONS` VALUES(67890, 17550); -- Register Courtney Young (67890) for MATH 201 (17550)
+INSERT INTO `REGISTRATIONS` VALUES(67890, 14216); -- Register Courtney Young (67890) for CSCI 302 (14216)
+
+INSERT INTO `REGISTRATIONS` VALUES(23456, 14150); -- Register Sydney Stokes (23456) for CSCI 301 (14150)
+INSERT INTO `REGISTRATIONS` VALUES(23456, 17550); -- Register Sydney Stokes (23456) for MATH 201 (17550)
+INSERT INTO `REGISTRATIONS` VALUES(23456, 14216); -- Register Sydney Stokes (23456) for CSCI 302 (14216)
+
+-- Commands for inserting values into ASSIGNMENTS (assignment_id, course_id, allocation_id, instance, points_possible)
+
+    -- Database Systems Class 
+
+    INSERT INTO `ASSIGNMENTS` VALUES(1, 14150, 1, 1, 70); -- Homework 1 worth 70 points 
+    INSERT INTO `ASSIGNMENTS` VALUES(2, 14150, 1, 2, 85); -- Homework 2 worth 85 points
+    INSERT INTO `ASSIGNMENTS` VALUES(3, 14150, 1, 3, 92); -- Homework 3 worth 92 points
+    INSERT INTO `ASSIGNMENTS` VALUES(4, 14150, 2, 1, 150); -- Midterm exam worth 150 points
+    INSERT INTO `ASSIGNMENTS` VALUES(5, 14150, 3, 1, 200); -- Final exam worth 200 points
+    INSERT INTO `ASSIGNMENTS` VALUES(6, 14150, 4, 1, 50); -- Participation / Attendance grade worth 50 points
+
+    -- Linear Algebra Class
+
+    INSERT INTO `ASSIGNMENTS` VALUES(7, 17550, 1, 1, 32); -- Quiz 1 worth 32 points 
+    INSERT INTO `ASSIGNMENTS` VALUES(8, 17550, 1, 2, 21); -- Quiz 2 worth 21 points
+    INSERT INTO `ASSIGNMENTS` VALUES(9, 17550, 1, 3, 10); -- Quiz 3 worth 10 points
+    INSERT INTO `ASSIGNMENTS` VALUES(10, 17550, 1, 4, 27); -- Quiz 4 worth 27 points
+    INSERT INTO `ASSIGNMENTS` VALUES(11, 17550, 1, 5, 28); -- Quiz 5 worth 25 points
+    INSERT INTO `ASSIGNMENTS` VALUES(12, 17550, 2, 1, 100); -- Exam 1 worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(13, 17550, 2, 2, 100); -- Exam 2 worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(14, 17550, 2, 3, 100); -- Exam 3 worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(15, 17550, 3, 1, 300); -- Final Exam worth 300 points
+    INSERT INTO `ASSIGNMENTS` VALUES(16, 17550, 4, 1, 100); -- Participation / Attendance worth 100 points
+
+    -- Structure of Programming Languages Class
+
+    INSERT INTO `ASSIGNMENTS` VALUES(17, 14216, 1, 1, 100); -- Participation / Attendance worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(18, 14216, 2, 1, 100); -- Midterm 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(19, 14216, 3, 1, 100); -- Final worth 100 points
 
 
--- Commands for inserting values into REGISTRATIONS
-INSERT INTO `REGISTRATIONS` VALUES(13845, 76294);
-INSERT INTO `REGISTRATIONS` VALUES(13845, 14150);
-INSERT INTO `REGISTRATIONS` VALUES(13845, 14216);
+-- Commands for inserting values into ALLOCATIONS
 
-INSERT INTO `REGISTRATIONS` VALUES(67890, 76294);
-INSERT INTO `REGISTRATIONS` VALUES(67890, 14150);
-INSERT INTO `REGISTRATIONS` VALUES(67890, 14216);
+INSERT INTO `ALLOCATIONS` VALUES(1, 14150, 'Attendance', 10); --Database Systems Class
+INSERT INTO `ALLOCATIONS` VALUES(2, 14150, 'Homework', 20); --Database Systems Class
+INSERT INTO `ALLOCATIONS` VALUES(3, 14150, 'Midterm', 30); --Database Systems Class
+INSERT INTO `ALLOCATIONS` VALUES(4, 14150, 'Final Exam', 40); --Database Systems Class
 
-INSERT INTO `REGISTRATIONS` VALUES(23456, 76294);
-INSERT INTO `REGISTRATIONS` VALUES(23456, 14150);
-INSERT INTO `REGISTRATIONS` VALUES(23456, 14216);
+INSERT INTO `ALLOCATIONS` VALUES(5, 17550, 'Attendance', 5); -- Linear Algebra Class
+INSERT INTO `ALLOCATIONS` VALUES(6, 17550, 'Quizzes', 25); -- Linear Algebra Class
+INSERT INTO `ALLOCATIONS` VALUES(7, 17550, 'Exam', 30); -- Linear Algebra Class
+INSERT INTO `ALLOCATIONS` VALUES(8, 17550, 'Final Exam', 40); -- Linear Algebra Class
 
--- Commands for inserting values into ASSIGNMENTS
-INSERT INTO `ASSIGNMENTS` VALUES(11836, 76294, 1, 1, 100);
-INSERT INTO `ASSIGNMENTS` VALUES(11837, 76294, 1, 1, 100);
-INSERT INTO `ASSIGNMENTS` VALUES(11838, 76294, 1, 1, 100);
+INSERT INTO `ALLOCATIONS` VALUES(9, 17550, 'Attendance', 30); --  Structure of Programming Languages Class
+INSERT INTO `ALLOCATIONS` VALUES(10, 17550, 'Midterm', 30); --  Structure of Programming Languages Class
+INSERT INTO `ALLOCATIONS` VALUES(11, 17550, 'Final Exam', 40); --  Structure of Programming Languages Class
 
-INSERT INTO `ASSIGNMENTS` VALUES(99822, 14150, 1, 1, 100);
-INSERT INTO `ASSIGNMENTS` VALUES(99823, 14150, 1, 1, 100);
-INSERT INTO `ASSIGNMENTS` VALUES(99824, 14150, 1, 1, 100);
+-- Commands for inserting values into STUDENTGRADES (student_id, assignment_id, points)
 
-INSERT INTO `ASSIGNMENTS` VALUES(76382, 14216, 1, 1, 100);
-INSERT INTO `ASSIGNMENTS` VALUES(76383, 14216, 1, 1, 100);
-INSERT INTO `ASSIGNMENTS` VALUES(76384, 14216, 1, 1, 100);
+-- Joshua Wallington Grades
 
--- Commands for inserting values into STUDENTGRADES
-INSERT INTO `STUDENTGRADES` VALUES(13845, 11836, 98);
-INSERT INTO `STUDENTGRADES` VALUES(13845, 11837, 89);
-INSERT INTO `STUDENTGRADES` VALUES(13845, 99823, 91);
-INSERT INTO `STUDENTGRADES` VALUES(13845, 76382, 110);
-INSERT INTO `STUDENTGRADES` VALUES(13845, 76383, 87);
+    -- Database Systems
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 1, 70); -- Homework 1 worth 70 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 2, 85); -- Homework 2 worth 85 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 3, 89); -- Homework 3 worth 92 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 4, 138); -- Midterm exam worth 150 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 5, 201); -- Final exam worth 200 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 6, 30);  -- Participation / Attendance grade worth 50 points
 
-INSERT INTO `STUDENTGRADES` VALUES(67890, 11836, 98);
-INSERT INTO `STUDENTGRADES` VALUES(67890, 11837, 88);
-INSERT INTO `STUDENTGRADES` VALUES(67890, 99823, 92);
-INSERT INTO `STUDENTGRADES` VALUES(67890, 76382, 100);
-INSERT INTO `STUDENTGRADES` VALUES(67890, 76383, 87);
+    -- Linear Algebra 
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 7, 30); -- Quiz 1 worth 32 points 
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 8, 17); -- Quiz 2 worth 21 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 9, 8); -- Quiz 3 worth 10 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 10, 27); -- Quiz 4 worth 27 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 11, 35); -- Quiz 5 worth 25 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 12, 67); -- Exam 1 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 13, 92); -- Exam 2 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 14, 77); -- Exam 3 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 15, 272); -- Final Exam worth 300 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 16, 79); -- Participation / Attendance worth 100 points
 
-INSERT INTO `STUDENTGRADES` VALUES(23456, 11836, 98);
-INSERT INTO `STUDENTGRADES` VALUES(23456, 11837, 92);
-INSERT INTO `STUDENTGRADES` VALUES(23456, 99823, 93);
-INSERT INTO `STUDENTGRADES` VALUES(23456, 76382, 99);
-INSERT INTO `STUDENTGRADES` VALUES(23456, 76383, 92);
+    -- Structure of Programming Language
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 17, 100); -- Participation / Attendance worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 18, 86); -- Midterm 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 19, 100);-- Final worth 100 points
 
 
--- -- Commands for inserting values into ALLOCATIONS
-INSERT INTO `ALLOCATIONS` VALUES(1, 76294, 'Participation', 10);
-INSERT INTO `ALLOCATIONS` VALUES(2, 76294, 'Homework', 20);
-INSERT INTO `ALLOCATIONS` VALUES(3, 76294, 'Tests', 50);
-INSERT INTO `ALLOCATIONS` VALUES(4, 76294, 'Projects', 20);
+-- Courtney Young Grades
 
-INSERT INTO `ALLOCATIONS` VALUES(5, 14150, 'Participation', 15);
-INSERT INTO `ALLOCATIONS` VALUES(6, 14150, 'Homework', 25);
-INSERT INTO `ALLOCATIONS` VALUES(7, 14150, 'Tests', 40);
-INSERT INTO `ALLOCATIONS` VALUES(8, 14150, 'Projects', 20);
+    -- Database Systems
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 1, 67); -- Homework 1 worth 70 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 2, 84); -- Homework 2 worth 85 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 3, 92); -- Homework 3 worth 92 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 4, 110); -- Midterm exam worth 150 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 5, 187); -- Final exam worth 200 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 6, 50);  -- Participation / Attendance grade worth 50 points
 
-INSERT INTO `ALLOCATIONS` VALUES(9, 14216, 'Participation', 10);
-INSERT INTO `ALLOCATIONS` VALUES(10, 14216, 'Homework', 30);
-INSERT INTO `ALLOCATIONS` VALUES(11, 14216, 'Tests', 45);
-INSERT INTO `ALLOCATIONS` VALUES(12, 14216, 'Projects', 15);
+    -- Linear Algebra 
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 7, 32); -- Quiz 1 worth 32 points 
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 8, 12); -- Quiz 2 worth 21 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 9, 4); -- Quiz 3 worth 10 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 10, 27); -- Quiz 4 worth 27 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 11, 35); -- Quiz 5 worth 25 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 12, 87); -- Exam 1 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 13, 92); -- Exam 2 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 14, 99); -- Exam 3 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 15, 298); -- Final Exam worth 300 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 16, 46); -- Participation / Attendance worth 100 points
+
+    -- Structure of Programming Language
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 17, 87); -- Participation / Attendance worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 18, 93); -- Midterm 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(67890, 19, 76);-- Final worth 100 points
+
+
+-- Sydney Stokes Grades
+
+    -- Database Systems
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 1, 40); -- Homework 1 worth 70 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 2, 65); -- Homework 2 worth 85 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 3, 92); -- Homework 3 worth 92 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 4, 150); -- Midterm exam worth 150 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 5, 178); -- Final exam worth 200 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 6, 50);  -- Participation / Attendance grade worth 50 points
+
+    -- Linear Algebra 
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 7, 32); -- Quiz 1 worth 32 points 
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 8, 21); -- Quiz 2 worth 21 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 9, 10); -- Quiz 3 worth 10 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 10, 22); -- Quiz 4 worth 27 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 11, 20); -- Quiz 5 worth 25 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 12, 100); -- Exam 1 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 13, 63); -- Exam 2 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 14, 100); -- Exam 3 worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 15, 272); -- Final Exam worth 300 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 16, 100); -- Participation / Attendance worth 100 points
+
+    -- Structure of Programming Language
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 17, 85); -- Participation / Attendance worth 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 18, 92); -- Midterm 100 points
+    INSERT INTO `STUDENTGRADES` VALUES(23456, 19, 100);-- Final worth 100 points
+
 
 -- Compute the average/highest/lowest score of an assignment
 
