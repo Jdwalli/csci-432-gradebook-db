@@ -6,6 +6,8 @@ Authors: Sydney Stokes, Joshua Wallington, Courtney Young
 
 ### ER Diagram
 
+![Entity Relationship Diagram](./assets//ERD.png)
+
 ### Commands For Creating Tables And Inserting Values
 
 #### Create STUDENTS table
