@@ -125,18 +125,19 @@ INSERT INTO `STUDENTGRADES` VALUES(23456, 9, 10); -- Quiz 3 worth 10 points
 
 ### Tables With The Contents That You Have Inserted
 
+#### Allocations Table
 ![Allocations Table](./assets//Allocation_Table.png)
-*Allocations Table*
 
+#### Assignments Table
 ![Assignments Table](./assets//Assignments_Table.png)
-*Assignments Table*
 
+#### Courses Table
 ![Courses Table](./assets//Courses_Table.png)
-*Courses Table*
 
+#### Registrations Table
 ![Registrations Table](./assets//Registrations_Table.png)
-*Registrations Table*
 
+#### Student Grades Table
 ![Student Grades Table 1/3](./assets//StudentGrades_Table_01.png)
 *Student Grades Table 1/3*
 
@@ -146,6 +147,7 @@ INSERT INTO `STUDENTGRADES` VALUES(23456, 9, 10); -- Quiz 3 worth 10 points
 ![Student Grades Table 3/3](./assets//StudentGrades_Table_03.png)
 *Student Grades Table 3/3*
 
+#### Students Table
 ![Students Table](./assets//Students_Table.png)
 *Students Table*
 
