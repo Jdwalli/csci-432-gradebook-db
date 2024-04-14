@@ -231,18 +231,64 @@ UPDATE STUDENTGRADES
 #### Compute the grade for a student (11);
 
 ~~~~sql
-
+WITH WeightedGrades AS (
+    SELECT S.first_name,  S.last_name, S.student_id, C.course_name, A.category_name,
+        AVG(SG.points * 1.0 / AG.points_possible) AS points_percentage, 
+        A.percentage AS grade_weight
+    FROM STUDENTGRADES SG
+    JOIN ASSIGNMENTS AG ON SG.assignment_id = AG.assignment_id
+    JOIN ALLOCATIONS A ON AG.allocation_id = A.allocation_id
+    JOIN COURSES C ON AG.course_id = C.course_id
+    JOIN STUDENTS S ON SG.student_id = S.student_id
+    GROUP BY S.student_id, C.course_name, A.category_name
+)
+SELECT 
+    first_name, last_name, student_id, course_name,
+    ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) AS grade_percentage,
+    CASE
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 90 THEN 'A'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 80 THEN 'B'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 70 THEN 'C'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letter_grade
+FROM WeightedGrades
+GROUP BY first_name, last_name, student_id, course_name;
 ~~~~
 
 
 #### Compute the grade for a student, where the lowest score for a given category is dropped (12)
 
 ~~~~sql
-
+WITH WeightedGrades AS (
+    SELECT S.first_name, S.last_name, S.student_id, C.course_name, A.category_name,
+        AVG(SG.points * 1.0 / AG.points_possible) AS points_percentage, 
+        A.percentage AS grade_weight,
+        ROW_NUMBER() OVER(PARTITION BY S.student_id, C.course_name, A.category_name ORDER BY SG.points ASC) AS rank
+    FROM STUDENTGRADES SG
+    JOIN ASSIGNMENTS AG ON SG.assignment_id = AG.assignment_id
+    JOIN ALLOCATIONS A ON AG.allocation_id = A.allocation_id
+    JOIN COURSES C ON AG.course_id = C.course_id
+    JOIN STUDENTS S ON SG.student_id = S.student_id
+    GROUP BY S.student_id, C.course_name, A.category_name, SG.assignment_id
+)
+, FilteredGrades AS (
+    SELECT * FROM WeightedGrades WHERE rank > 1
+)
+SELECT 
+    first_name, last_name, student_id, course_name,
+    ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) AS grade_percentage,
+    CASE
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 90 THEN 'A'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 80 THEN 'B'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 70 THEN 'C'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letter_grade
+FROM FilteredGrades
+WHERE category_name = 'Quizzes'
+GROUP BY first_name, last_name, student_id, course_name;
 ~~~~
-
-
-
 
 ## Installation Guide 
 
@@ -262,14 +308,14 @@ UPDATE STUDENTGRADES
 - [X] Change the percentages of the categories for a course
 - [X] Add 2 points to the score of each student on an assignment
 - [X] Add 2 points just to those students whose last name contains a 'Q'.
-- [ ] Compute the grade for a student
-- [ ] Compute the grade for a student, where the lowest score for a given category is dropped.
+- [X] Compute the grade for a student
+- [X] Compute the grade for a student, where the lowest score for a given category is dropped.
 
 **Submission**
-- [ ] The ER diagram (with the attributes and foreign keys/primary keys indicated);
+- [X] The ER diagram (with the attributes and foreign keys/primary keys indicated);
 - [X] The commands for creating tables and inserting values (task 2);
 - [X] The tables with the contents that you have inserted (task 3);
-- [ ] The command that you use to get task 4, 5, 6, 7, 8, 9, 10, 11, 12;
+- [X] The command that you use to get task 4, 5, 6, 7, 8, 9, 10, 11, 12;
 - [X] The source code;
 - [X] A README file. The minimum required content of the file should contains the instructions to compile and execute your code;
 - [ ] The test cases that you use and the results that you get from the test cases.
