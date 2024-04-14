@@ -94,31 +94,31 @@ INSERT INTO `REGISTRATIONS` VALUES(23456, 14216); -- Register Sydney Stokes (234
 
     -- Database Systems Class 
 
-    INSERT INTO `ASSIGNMENTS` VALUES(1, 14150, 1, 1, 70); -- Homework 1 worth 70 points 
-    INSERT INTO `ASSIGNMENTS` VALUES(2, 14150, 1, 2, 85); -- Homework 2 worth 85 points
-    INSERT INTO `ASSIGNMENTS` VALUES(3, 14150, 1, 3, 92); -- Homework 3 worth 92 points
-    INSERT INTO `ASSIGNMENTS` VALUES(4, 14150, 2, 1, 150); -- Midterm exam worth 150 points
-    INSERT INTO `ASSIGNMENTS` VALUES(5, 14150, 3, 1, 200); -- Final exam worth 200 points
-    INSERT INTO `ASSIGNMENTS` VALUES(6, 14150, 4, 1, 50); -- Participation / Attendance grade worth 50 points
+    INSERT INTO `ASSIGNMENTS` VALUES(6, 14150, 1, 1, 50); -- Participation / Attendance grade worth 50 points
+    INSERT INTO `ASSIGNMENTS` VALUES(1, 14150, 2, 1, 70); -- Homework 1 worth 70 points 
+    INSERT INTO `ASSIGNMENTS` VALUES(2, 14150, 2, 2, 85); -- Homework 2 worth 85 points
+    INSERT INTO `ASSIGNMENTS` VALUES(3, 14150, 2, 3, 92); -- Homework 3 worth 92 points
+    INSERT INTO `ASSIGNMENTS` VALUES(4, 14150, 3, 1, 150); -- Midterm exam worth 150 points
+    INSERT INTO `ASSIGNMENTS` VALUES(5, 14150, 4, 1, 200); -- Final exam worth 200 points
 
     -- Linear Algebra Class
 
-    INSERT INTO `ASSIGNMENTS` VALUES(7, 17550, 1, 1, 32); -- Quiz 1 worth 32 points 
-    INSERT INTO `ASSIGNMENTS` VALUES(8, 17550, 1, 2, 21); -- Quiz 2 worth 21 points
-    INSERT INTO `ASSIGNMENTS` VALUES(9, 17550, 1, 3, 10); -- Quiz 3 worth 10 points
-    INSERT INTO `ASSIGNMENTS` VALUES(10, 17550, 1, 4, 27); -- Quiz 4 worth 27 points
-    INSERT INTO `ASSIGNMENTS` VALUES(11, 17550, 1, 5, 28); -- Quiz 5 worth 25 points
-    INSERT INTO `ASSIGNMENTS` VALUES(12, 17550, 2, 1, 100); -- Exam 1 worth 100 points
-    INSERT INTO `ASSIGNMENTS` VALUES(13, 17550, 2, 2, 100); -- Exam 2 worth 100 points
-    INSERT INTO `ASSIGNMENTS` VALUES(14, 17550, 2, 3, 100); -- Exam 3 worth 100 points
-    INSERT INTO `ASSIGNMENTS` VALUES(15, 17550, 3, 1, 300); -- Final Exam worth 300 points
-    INSERT INTO `ASSIGNMENTS` VALUES(16, 17550, 4, 1, 100); -- Participation / Attendance worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(16, 17550, 5, 1, 100); -- Participation / Attendance worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(7, 17550, 6, 1, 32); -- Quiz 1 worth 32 points 
+    INSERT INTO `ASSIGNMENTS` VALUES(8, 17550, 6, 2, 21); -- Quiz 2 worth 21 points
+    INSERT INTO `ASSIGNMENTS` VALUES(9, 17550, 6, 3, 10); -- Quiz 3 worth 10 points
+    INSERT INTO `ASSIGNMENTS` VALUES(10, 17550, 6, 4, 27); -- Quiz 4 worth 27 points
+    INSERT INTO `ASSIGNMENTS` VALUES(11, 17550, 6, 5, 28); -- Quiz 5 worth 25 points
+    INSERT INTO `ASSIGNMENTS` VALUES(12, 17550, 7, 1, 100); -- Exam 1 worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(13, 17550, 7, 2, 100); -- Exam 2 worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(14, 17550, 7, 3, 100); -- Exam 3 worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(15, 17550, 8, 1, 300); -- Final Exam worth 300 points
 
     -- Structure of Programming Languages Class
 
-    INSERT INTO `ASSIGNMENTS` VALUES(17, 14216, 1, 1, 100); -- Participation / Attendance worth 100 points
-    INSERT INTO `ASSIGNMENTS` VALUES(18, 14216, 2, 1, 100); -- Midterm 100 points
-    INSERT INTO `ASSIGNMENTS` VALUES(19, 14216, 3, 1, 100); -- Final worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(17, 14216, 9, 1, 100); -- Participation / Attendance worth 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(18, 14216, 10, 1, 100); -- Midterm 100 points
+    INSERT INTO `ASSIGNMENTS` VALUES(19, 14216, 11, 1, 100); -- Final worth 100 points
 
 
 -- Commands for inserting values into ALLOCATIONS
@@ -146,7 +146,7 @@ INSERT INTO `ALLOCATIONS` VALUES(11, 17550, 'Final Exam', 40); --  Structure of 
     INSERT INTO `STUDENTGRADES` VALUES(13845, 2, 85); -- Homework 2 worth 85 points
     INSERT INTO `STUDENTGRADES` VALUES(13845, 3, 89); -- Homework 3 worth 92 points
     INSERT INTO `STUDENTGRADES` VALUES(13845, 4, 138); -- Midterm exam worth 150 points
-    INSERT INTO `STUDENTGRADES` VALUES(13845, 5, 201); -- Final exam worth 200 points
+    INSERT INTO `STUDENTGRADES` VALUES(13845, 5, 200); -- Final exam worth 200 points
     INSERT INTO `STUDENTGRADES` VALUES(13845, 6, 30);  -- Participation / Attendance grade worth 50 points
 
     -- Linear Algebra 
@@ -279,5 +279,59 @@ WHERE C.course_name = 'Database Systems';
     WHERE assignment_id = 17550
     AND student_id IN (SELECT student_id FROM STUDENTS WHERE last_name LIKE '%Q%');
 
--- Compute the grade for a student
--- Compute the grade for a student, where the lowest score for a given category is dropped.
+-- Compute the grade for a student (Includes letter grade and percentage based on the weights)
+
+WITH WeightedGrades AS (
+    SELECT S.first_name,  S.last_name, S.student_id, C.course_name, A.category_name,
+        AVG(SG.points * 1.0 / AG.points_possible) AS points_percentage, 
+        A.percentage AS grade_weight
+    FROM STUDENTGRADES SG
+    JOIN ASSIGNMENTS AG ON SG.assignment_id = AG.assignment_id
+    JOIN ALLOCATIONS A ON AG.allocation_id = A.allocation_id
+    JOIN COURSES C ON AG.course_id = C.course_id
+    JOIN STUDENTS S ON SG.student_id = S.student_id
+    GROUP BY S.student_id, C.course_name, A.category_name
+)
+SELECT 
+    first_name, last_name, student_id, course_name,
+    ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) AS grade_percentage,
+    CASE
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 90 THEN 'A'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 80 THEN 'B'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 70 THEN 'C'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letter_grade
+FROM WeightedGrades
+GROUP BY first_name, last_name, student_id, course_name;
+
+-- Compute the grade for a student, where the lowest score for a given category is dropped. (Drop lowest in linear algebra)
+
+WITH WeightedGrades AS (
+    SELECT S.first_name, S.last_name, S.student_id, C.course_name, A.category_name,
+        AVG(SG.points * 1.0 / AG.points_possible) AS points_percentage, 
+        A.percentage AS grade_weight,
+        ROW_NUMBER() OVER(PARTITION BY S.student_id, C.course_name, A.category_name ORDER BY SG.points ASC) AS rank
+    FROM STUDENTGRADES SG
+    JOIN ASSIGNMENTS AG ON SG.assignment_id = AG.assignment_id
+    JOIN ALLOCATIONS A ON AG.allocation_id = A.allocation_id
+    JOIN COURSES C ON AG.course_id = C.course_id
+    JOIN STUDENTS S ON SG.student_id = S.student_id
+    GROUP BY S.student_id, C.course_name, A.category_name, SG.assignment_id
+)
+, FilteredGrades AS (
+    SELECT * FROM WeightedGrades WHERE rank > 1
+)
+SELECT 
+    first_name, last_name, student_id, course_name,
+    ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) AS grade_percentage,
+    CASE
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 90 THEN 'A'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 80 THEN 'B'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 70 THEN 'C'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letter_grade
+FROM FilteredGrades
+WHERE category_name = 'Quizzes'
+GROUP BY first_name, last_name, student_id, course_name;
