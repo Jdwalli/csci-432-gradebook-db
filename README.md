@@ -4,6 +4,33 @@ Authors: Sydney Stokes, Joshua Wallington, Courtney Young
 
 ## Project Submission
 
+## Installation Guide
+
+### Using Visual Studio Code:
+
+1. **Install SQLite Extension**: Download and install the SQLite extension (`alexcvzz.vscode-sqlite`) created by alexcvzz from the Visual Studio Code Marketplace.
+   
+2. **Open Database File**: Access the Command Palette in Visual Studio Code and open the database file (`gradebook_database.db`) from the repository.
+
+### Creating the Database File:
+
+If the database file does not exist:
+
+1. **Run Python Script**: Navigate to the repository directory and run the Python script `main.py` using the following command:
+
+```python
+python3 main.py
+```
+
+This script will create a file named `gradebook_database.db` containing the database.
+
+### Viewing Database Online:
+
+If you prefer to use online tools to examine the database:
+
+1. **Use SQLite Viewer**: You can use a free online tool called SQLite Viewer ([https://inloop.github.io/sqlite-viewer/](https://inloop.github.io/sqlite-viewer/)) to upload the `.db` file and visualize its contents.
+
+
 ### ER Diagram
 
 ![Entity Relationship Diagram](./assets//ERD.png)
@@ -289,11 +316,6 @@ FROM FilteredGrades
 WHERE category_name = 'Quizzes'
 GROUP BY first_name, last_name, student_id, course_name;
 ~~~~
-
-## Installation Guide 
-
-
-
 
 ## Project Checklist
 
