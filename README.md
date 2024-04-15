@@ -421,4 +421,4 @@ GROUP BY first_name, last_name, student_id, course_name;
 - [X] The command that you use to get task 4, 5, 6, 7, 8, 9, 10, 11, 12;
 - [X] The source code;
 - [X] A README file. The minimum required content of the file should contains the instructions to compile and execute your code;
-- [ ] The test cases that you use and the results that you get from the test cases.
+- [X] The test cases that you use and the results that you get from the test cases.
