@@ -31,13 +31,13 @@ If you prefer to use online tools to examine the database:
 1. **Use SQLite Viewer**: You can use a free online tool called SQLite Viewer ([https://inloop.github.io/sqlite-viewer/](https://inloop.github.io/sqlite-viewer/)) to upload the `.db` file and visualize its contents.
 
 
-### ER Diagram
+### ER Diagram:
 
 ![Entity Relationship Diagram](./assets//ERD.png)
 
-### Commands For Creating Tables And Inserting Values
+### Commands For Creating Tables And Inserting Values:
 
-#### Create STUDENTS table
+#### Create STUDENTS table:
 ~~~~sql
 CREATE TABLE "STUDENTS" (
     "first_name" varchar(255) DEFAULT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE "STUDENTS" (
 );
 ~~~~
 
-#### Create COURSES table
+#### Create COURSES table:
 ~~~~sql
 CREATE TABLE "COURSES" (
     "course_id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,7 +59,7 @@ CREATE TABLE "COURSES" (
 );
 ~~~~
 
-#### Create REGISTRATIONS table
+#### Create REGISTRATIONS table:
 ~~~~sql
 CREATE TABLE "REGISTRATIONS" (
     "student_id" INTEGER,
@@ -70,7 +70,7 @@ CREATE TABLE "REGISTRATIONS" (
 );
 ~~~~
 
-#### Create ASSIGNMENTS table
+#### Create ASSIGNMENTS table:
 ~~~~sql
 CREATE TABLE "ASSIGNMENTS" (
     "assignment_id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,7 +83,7 @@ CREATE TABLE "ASSIGNMENTS" (
 );
 ~~~~
 
-#### Create STUDENTGRADES table
+#### Create STUDENTGRADES table:
 ~~~~sql
 CREATE TABLE "STUDENTGRADES" (
     "student_id" INTEGER NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE "STUDENTGRADES" (
 
 ~~~~
 
-#### Create ALLOCATIONS table
+#### Create ALLOCATIONS table:
 ~~~~sql
 CREATE TABLE "ALLOCATIONS" (
     "allocation_id" INTEGER PRIMARY KEY,
