@@ -5,6 +5,12 @@
             "driver": "SQLite",
             "database": "${workspaceFolder:submission-repo}/gradebook_database.db",
             "name": "database-systems-class"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Windows",
+            "database": "${workspaceFolder:csci-432-gradebook-db}/gradebook_database.db"
         }
     ],
     "sqltools.useNodeRuntime": true

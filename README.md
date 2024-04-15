@@ -317,6 +317,87 @@ WHERE category_name = 'Quizzes'
 GROUP BY first_name, last_name, student_id, course_name;
 ~~~~
 
+### Test Code Results
+
+
+#### Testing for adding 2 points to the score of each student on an assignment
+~~~~sql
+-- Testing for adding 2 points to the score of each student on an assignment:
+    -- Show Table
+        SELECT * FROM 'STUDENTGRADES' WHERE assignment_id = 2;
+    -- Update
+        UPDATE STUDENTGRADES
+        SET points = points + 2
+        WHERE assignment_id = 2; 
+    -- Show after update
+        SELECT * FROM 'STUDENTGRADES' WHERE assignment_id = 2;
+~~~~
+![Student Grades Without Extra Points](./assets//TESTING_2Points_Before.png)
+![Student Grades After Extra Points](./assets//TESTING_2Points_After.png)
+
+#### Compute the grade for a student (Includes letter grade and percentage based on the weights)
+
+~~~~sql
+    WITH WeightedGrades AS (
+    SELECT S.first_name,  S.last_name, S.student_id, C.course_name, A.category_name,
+        AVG(SG.points * 1.0 / AG.points_possible) AS points_percentage, 
+        A.percentage AS grade_weight
+    FROM STUDENTGRADES SG
+    JOIN ASSIGNMENTS AG ON SG.assignment_id = AG.assignment_id
+    JOIN ALLOCATIONS A ON AG.allocation_id = A.allocation_id
+    JOIN COURSES C ON AG.course_id = C.course_id
+    JOIN STUDENTS S ON SG.student_id = S.student_id
+    GROUP BY S.student_id, C.course_name, A.category_name
+)
+SELECT 
+    first_name, last_name, student_id, course_name,
+    ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) AS grade_percentage,
+    CASE
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 90 THEN 'A'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 80 THEN 'B'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 70 THEN 'C'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letter_grade
+FROM WeightedGrades
+GROUP BY first_name, last_name, student_id, course_name;
+~~~~
+![Compute Grades Result](./assets//Compute_Grade.png)
+
+#### Compute the grade for a student, where the lowest score for a given category is dropped. (Drop lowest in linear algebra)
+![Compute Grades Without Lowest Category Result](./assets//Compute_Grade_Lowest_Category.png)
+~~~~sql
+WITH WeightedGrades AS (
+    SELECT S.first_name, S.last_name, S.student_id, C.course_name, A.category_name,
+        AVG(SG.points * 1.0 / AG.points_possible) AS points_percentage, 
+        A.percentage AS grade_weight,
+        ROW_NUMBER() OVER(PARTITION BY S.student_id, C.course_name, A.category_name ORDER BY SG.points ASC) AS rank
+    FROM STUDENTGRADES SG
+    JOIN ASSIGNMENTS AG ON SG.assignment_id = AG.assignment_id
+    JOIN ALLOCATIONS A ON AG.allocation_id = A.allocation_id
+    JOIN COURSES C ON AG.course_id = C.course_id
+    JOIN STUDENTS S ON SG.student_id = S.student_id
+    GROUP BY S.student_id, C.course_name, A.category_name, SG.assignment_id
+)
+, FilteredGrades AS (
+    SELECT * FROM WeightedGrades WHERE rank > 1
+)
+SELECT 
+    first_name, last_name, student_id, course_name,
+    ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) AS grade_percentage,
+    CASE
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 90 THEN 'A'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 80 THEN 'B'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 70 THEN 'C'
+        WHEN ROUND((SUM(grade_weight * points_percentage) / SUM(grade_weight)) * 100, 2) >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letter_grade
+FROM FilteredGrades
+WHERE category_name = 'Quizzes'
+GROUP BY first_name, last_name, student_id, course_name;
+~~~~
+
+
 ## Project Checklist
 
 **Tasks**
@@ -340,4 +421,4 @@ GROUP BY first_name, last_name, student_id, course_name;
 - [X] The command that you use to get task 4, 5, 6, 7, 8, 9, 10, 11, 12;
 - [X] The source code;
 - [X] A README file. The minimum required content of the file should contains the instructions to compile and execute your code;
-- [ ] The test cases that you use and the results that you get from the test cases.
+- [X] The test cases that you use and the results that you get from the test cases.

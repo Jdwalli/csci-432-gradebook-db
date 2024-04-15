@@ -335,3 +335,15 @@ SELECT
 FROM FilteredGrades
 WHERE category_name = 'Quizzes'
 GROUP BY first_name, last_name, student_id, course_name;
+
+
+-- Testing for adding 2 points to the score of each student on an assignment:
+    -- Show Table
+        SELECT * FROM 'STUDENTGRADES' WHERE assignment_id = 2;
+    -- Update
+        UPDATE STUDENTGRADES
+        SET points = points + 2
+        WHERE assignment_id = 2; 
+    -- Show after update
+        SELECT * FROM 'STUDENTGRADES' WHERE assignment_id = 2;
+
