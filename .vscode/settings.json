@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:submission-repo}/gradebook_database.db",
+            "name": "database-systems-class"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
